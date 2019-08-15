@@ -7,5 +7,7 @@ Can be use with Pihole.
 - Start the container with ```docker-compose up --build -d```.  
 - Connect into the container with ```docker-compose exec cloudflared sh ```.  
 
+In the **docker-compose.yml**, the cloudflared container has a static ip. You have to use this @ip to specify a custom DNS in your configuration.  
+
 ## Relative links  
 https://docs.pi-hole.net/guides/dns-over-https/
