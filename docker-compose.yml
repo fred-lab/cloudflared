@@ -9,6 +9,4 @@ services:
       - ARCHITECTURE=${ARCHITECTURE}
       - PORT=${PORT}
     container_name: cloudflared
-    # environment:
-    #   - ARCHITECTURE=${ARCHITECTURE}
-    #   - PORT=${PORT}
+    restart: always

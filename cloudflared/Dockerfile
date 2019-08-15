@@ -10,13 +10,14 @@ ARG  PORT
 ENV  PORT $PORT
 
 RUN apk update \
-    && printenv \
-    && echo "test ${ARCHITECTURE}" \
-    && echo "test https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-${ARCHITECTURE}.tgz" \
     && apk add --no-cache --virtual install-dependencies curl tar\
-    && curl -fSL "https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-${ARCHITECTURE}.tgz" | tar xzC /usr/local/bin \
+    && apk add --no-cache libc6-compat \
+    && curl "https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-${ARCHITECTURE}.tgz" | tar -xzC /usr/local/bin \
+    && chmod +x /usr/local/bin/cloudflared \
     # Clean up
     && apk del --purge install-dependencies \
     && rm -rf /var/cache/apk/*
 
-EXPOSE $PORT
+EXPOSE $PORT/tcp $PORT/udp
+
+CMD cloudflared proxy-dns --port $PORT --address 0.0.0.0 --upstream https://1.1.1.1/dns-query --upstream https://1.0.0.1/dns-query
