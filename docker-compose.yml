@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  cloudflared:
+    env_file: .env
+    build: 
+      context: ./cloudflared
+      args:
+      - ARCHITECTURE=${ARCHITECTURE}
+      - PORT=${PORT}
+    container_name: cloudflared
+    restart: always
